@@ -1,0 +1,49 @@
+# 虚拟环境
+venv/
+.venv/
+env/
+ENV/
+
+# Python 缓存
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# 打包/分发
+build/
+dist/
+*.egg-info/
+*.egg
+.eggs/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# 环境变量与密钥
+.env
+.env.*
+!.env.example
+
+# 数据库
+*.db
+*.sqlite
+*.sqlite3
+
+# 用户上传文件
+uploads/
+
+# 测试与覆盖率
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# IDE
+.idea/
+*.swp
+*.swo
+
+# 操作系统
+.DS_Store
+Thumbs.db
