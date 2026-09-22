@@ -2,15 +2,14 @@ package com.rdbb.jiancircle.ui.screen.home
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -73,8 +72,10 @@ fun HomeScreen(
             .collect { nearBottom -> if (nearBottom) viewModel.loadMore() }
     }
 
+    // 内嵌于 MainScreen 的 Scaffold，系统栏 inset 由外层统一预留，这里置零避免重复 padding
     Scaffold(
         snackbarHost = { SnackbarHost(snackbarHostState) },
+        contentWindowInsets = WindowInsets(0, 0, 0, 0),
         topBar = {
             HomeSearchBar(
                 query = state.searchQuery,
@@ -124,10 +125,7 @@ fun HomeScreen(
 
                 // 信息流列表
                 else -> {
-                    LazyColumn(
-                        state = listState,
-                        contentPadding = PaddingValues(bottom = 80.dp)
-                    ) {
+                    LazyColumn(state = listState) {
                         items(items = state.posts, key = { it.id }) { post ->
                             PostCard(
                                 post = post,
@@ -178,8 +176,7 @@ private fun HomeSearchBar(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            // enableEdgeToEdge 下自定义 topBar 需自行让出状态栏高度
-            .statusBarsPadding()
+            // 状态栏高度已由外层 MainScreen 的 Scaffold padding 预留，无需再让
             .padding(horizontal = 12.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
